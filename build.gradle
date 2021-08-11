@@ -1,0 +1,68 @@
+buildscript {
+	ext {
+		springBootVersion = '2.5.3'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath "io.spring.gradle:dependency-management-plugin:1.0.11.RELEASE"
+	}
+}
+
+allprojects {
+
+	apply plugin: 'java'
+	apply plugin: 'org.springframework.boot'
+	apply plugin: 'io.spring.dependency-management'
+
+	group = 'com.idus'
+	version = '0.0.1-SNAPSHOT'
+	sourceCompatibility = '11'
+
+	repositories {
+		mavenCentral()
+	}
+
+	dependencies {
+        compileOnly 'org.projectlombok:lombok'
+		annotationProcessor 'org.projectlombok:lombok'
+		implementation 'org.springframework.boot:spring-boot-starter'
+		implementation 'org.springframework.boot:spring-boot-starter-web'
+		implementation 'org.springframework.boot:spring-boot-starter-security'
+		implementation 'org.springframework.data:spring-data-commons:2.5.2'
+		implementation group: 'org.hibernate', name: 'hibernate-validator', version: '6.1.0.Final'
+		implementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'
+        testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
+        testImplementation('org.springframework.boot:spring-boot-starter-test') {
+            exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+        }
+	}
+
+	test {
+		useJUnitPlatform()
+	}
+}
+
+subprojects {
+
+	sourceCompatibility = '11'
+
+	repositories {
+		mavenCentral()
+	}
+
+	dependencies {
+	}
+
+}
+
+project(':idus-api') {
+	dependencies {
+		implementation project(':idus-domain')
+	}
+}
+
+project(':idus-domain') {
+}

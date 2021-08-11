@@ -1,0 +1,2 @@
+rootProject.name = 'homework'
+include("idus-api", "idus-domain")
